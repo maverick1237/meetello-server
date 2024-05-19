@@ -11,6 +11,10 @@ public class JWTAuthentication implements Authentication {
 
     String jwt;
     UserEntity userEntity;
+
+    public JWTAuthentication(String jwt){
+        this.jwt = jwt;
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
@@ -18,7 +22,7 @@ public class JWTAuthentication implements Authentication {
 
     @Override
     public Object getCredentials() {
-        return null;
+        return jwt;
     }
 
     @Override
@@ -50,4 +54,5 @@ public class JWTAuthentication implements Authentication {
     public boolean implies(Subject subject) {
         return Authentication.super.implies(subject);
     }
+
 }

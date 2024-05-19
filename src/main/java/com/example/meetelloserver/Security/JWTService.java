@@ -26,6 +26,9 @@ public class JWTService {
     }
 
     public String retrieveUserId (String jwtString){
+        if (jwtString == null || jwtString.isEmpty()) {
+            throw new IllegalArgumentException("JWT token is missing");
+        }
         var decodedSJWT = JWT.decode(jwtString);
         return decodedSJWT.getSubject();
     }

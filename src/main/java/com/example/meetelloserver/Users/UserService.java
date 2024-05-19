@@ -33,8 +33,7 @@ public UserEntity createUser(CreateUserReq req)throws FieldCantBeNullException ,
 
 //Searching a user using userID
     public UserEntity findUserById(String userId){
-        var user = userRepository.findById(userId).orElseThrow(()-> new UserNotFound(userId));
-        return user;
+        return userRepository.findById(userId).orElseThrow(()-> new UserNotFound(userId));
     }
 
 

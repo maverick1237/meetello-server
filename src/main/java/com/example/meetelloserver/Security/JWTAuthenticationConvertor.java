@@ -13,6 +13,6 @@ public class JWTAuthenticationConvertor implements AuthenticationConverter {
             return  null;
         }
         var jwt = authenticationHeader.substring(7);
-        return new JWTAuthentication();
+        return new JWTAuthentication(jwt);
     }
 }

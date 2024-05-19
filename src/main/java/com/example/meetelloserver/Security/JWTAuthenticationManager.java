@@ -19,6 +19,9 @@ public class JWTAuthenticationManager  implements AuthenticationManager {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         if(authentication instanceof  JWTAuthentication jwtAuthentication){
             var jwt = jwtAuthentication.getCredentials();
+            if (jwt == null || ((String) jwt).isEmpty()) {
+                throw new IllegalArgumentException("JWT token is missing");
+            }
             var userId = jwtService.retrieveUserId((String) jwt);
 
             jwtAuthentication.userEntity = userService.findUserById(userId);
