@@ -10,8 +10,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/rooms")
@@ -36,4 +34,17 @@ public class RoomsController {
         var rooms = roomsService.getAllRooms();
         return ResponseEntity.ok().body((ArrayList<RoomsEntity>) rooms);
     }
+
+    @GetMapping("/join/{roomId}")
+    public ResponseEntity<RoomsEntity> joinRoom(@AuthenticationPrincipal UserEntity user , @PathVariable String roomId ) throws RoomsService.RoomNotFound {
+        var room = roomsService.joinedByUser(roomId , user.getUserId());
+        return ResponseEntity.ok().body(room);
+    }
+
+    @GetMapping("delete/{roomId}")
+    public ResponseEntity deleteRoom(@PathVariable String roomId) throws RoomsService.RoomNotFound {
+        var deletedRoom = roomsService.deleteRoom(roomId);
+        return ResponseEntity.ok().body(deletedRoom);
+    }
+
 }

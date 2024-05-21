@@ -4,8 +4,10 @@ import com.example.meetelloserver.Rooms.dtos.CreateRoomReq;
 import com.example.meetelloserver.Users.UserRepository;
 import com.example.meetelloserver.Users.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,8 +37,32 @@ public class RoomsService  {
                         .roomDescription(req.getRoomDescription())
                         .roomType(req.getRoomType())
                         .roomAdmin(admin)
+                        .roomMembers(new ArrayList<>())
                         .build()
         );
+    }
+
+
+    public RoomsEntity joinedByUser(String roomId , String userId) throws RoomNotFound {
+        var room = roomsRepository.findById(roomId).orElseThrow(()-> new RoomNotFound(roomId));
+        var user = userRepository.findById(userId).orElseThrow(()-> new UserService.UserNotFound(userId));
+        room.getRoomMembers().add(user);
+        return roomsRepository.save(room);
+    }
+
+    public ResponseEntity deleteRoom(String roomId) throws RoomNotFound {
+        var room = roomsRepository.findById(roomId).orElseThrow(()-> new RoomNotFound(roomId));
+        roomsRepository.delete(room);
+        return ResponseEntity.ok().body("Room with id "+roomId+" deleted successfully");
+    }
+
+
+
+
+    public static class  RoomNotFound extends Exception{
+        RoomNotFound(String roomId){
+            super("Room with id "+roomId+" not found");
+        }
     }
 
 
