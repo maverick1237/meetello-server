@@ -41,10 +41,16 @@ public class RoomsController {
         return ResponseEntity.ok().body(room);
     }
 
-    @GetMapping("delete/{roomId}")
+    @GetMapping("/delete/{roomId}")
     public ResponseEntity deleteRoom(@PathVariable String roomId) throws RoomsService.RoomNotFound {
         var deletedRoom = roomsService.deleteRoom(roomId);
         return ResponseEntity.ok().body(deletedRoom);
+    }
+
+    @GetMapping("/{roomId}")
+    public ResponseEntity<RoomsEntity> getRoomById(@PathVariable String roomId) throws RoomsService.RoomNotFound{
+        var room = roomsService.getRoomById(roomId);
+        return  ResponseEntity.ok().body(room);
     }
 
 }

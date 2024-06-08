@@ -27,6 +27,11 @@ public class RoomsService  {
         return roomsRepository.findAll();
     }
 
+
+     //get room by id
+    public RoomsEntity getRoomById(String roomId) throws RoomNotFound {
+        return roomsRepository.findById(roomId).orElseThrow(()->new RoomNotFound(roomId));
+    }
     //creating a room
 
     public RoomsEntity createNewRoom(CreateRoomReq req , String adminId){
@@ -55,9 +60,6 @@ public class RoomsService  {
         roomsRepository.delete(room);
         return ResponseEntity.ok().body("Room with id "+roomId+" deleted successfully");
     }
-
-
-
 
     public static class  RoomNotFound extends Exception{
         RoomNotFound(String roomId){
