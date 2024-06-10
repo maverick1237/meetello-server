@@ -6,3 +6,6 @@ spring:
     mongodb:
       database: "MeetelloDB_dev"
 
+frontend:
+  url: "http://localhost:5173"
+

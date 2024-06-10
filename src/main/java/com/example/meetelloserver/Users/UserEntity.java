@@ -15,6 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @TypeAlias("UsersTable")
 public class UserEntity {
 
+
     @Id
     private String userId;
 
@@ -26,5 +27,10 @@ public class UserEntity {
 
     @NonNull
     private String password;
+
+    private String activationCode;
+
+    private boolean activated;
+
 
 }

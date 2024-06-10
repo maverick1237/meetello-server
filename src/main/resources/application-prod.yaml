@@ -4,3 +4,6 @@ spring:
   data:
     mongodb:
       database: "MeetelloDB"
+
+frontend:
+  url: "https://app.meetello.live"
